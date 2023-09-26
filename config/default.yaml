@@ -1,34 +1,34 @@
-seed: 42
-k_fold: 5
-train:
-  epochs: 200
-  learning_rate: 1e-3
-  step_size: 20
+seed: 42 #随机种子
+k_fold: 5 #交叉验证折数
+train:    #训练基本设置
+  epochs: 200  #训练迭代次数
+  learning_rate: 1e-3 #初始学习率
+  step_size: 20 #步长
   gamma: 0.5
-  weight_decay: 1e-7
-  checkpoint_dir: "checkpoints"
-  benchmark: True
-  # deterministic: True
-  accelerator: "gpu"
-  devices: 1
-  ddp: False
-  precision: "16-mixed"
-  accumulate_grad_batches: 1
-dataset:
-  rearrange: False
-  patch_size: 7000
-  mode: "npz"                         # npz or csv
+  weight_decay: 1e-7 
+  checkpoint_dir: "checkpoints" #权重文件夹
+  benchmark: True         #基准
+  # deterministic: True   #是否确定性的
+  accelerator: "gpu"      #加速器
+  devices: 1              #第几个设备
+  ddp: False              #是否分布式
+  precision: "16-mixed"     #精度类别
+  accumulate_grad_batches: 1    #聚集梯度批大小
+dataset:           #数据集设置
+  rearrange: False               #是否重排
+  patch_size: 7000               #块大小
+  mode: "npz"                         # npz or csv 数据模式
   # csv_path: "data/dataset.csv"
   csv_path: "npz/npz_dataset.csv"
-  transform: False
-dataloader:
-  batch_size: 32
-  num_workers: 4
-model:
-  num_classes: 15                       # TeethLabels + 1(gum)
-  num_channels: 15
-  with_dropout: True
-  dropout: 0.5
-logger:
-  project: "iMeshSegNet"
-  log_every_n_steps: 1
+  transform: False                   #是否变换
+dataloader:                       #数据加载器
+  batch_size: 32                  #批大小
+  num_workers: 4                  
+model:                  #模型基本设置
+  num_classes: 15                       # TeethLabels + 1(gum) 类别数
+  num_channels: 15                      #通道数
+  with_dropout: True                    #是否丢弃多余的
+  dropout: 0.5                          #丢弃概率
+logger:                                 #日志记录设置
+  project: "iMeshSegNet"                #项目名称
+  log_every_n_steps: 1                  #多少步记录一次
