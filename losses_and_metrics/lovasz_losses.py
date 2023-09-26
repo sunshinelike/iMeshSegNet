@@ -7,17 +7,17 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
+#Lovasz扩展通常用于在二进制图像分割任务中作为损失函数，它在优化过程中对分割结果的平滑性进行建模
 def lovasz_grad(gt_sorted):
     """
     Computes gradient of the Lovasz extension w.r.t sorted errors
     See Alg. 1 in paper
     """
-    p = len(gt_sorted)
-    gts = gt_sorted.sum()
+    p = len(gt_sorted) #计算变量 gt_sorted 的长度，即输入的基准的数量，通常代表了不同的样本或像素
+    gts = gt_sorted.sum() #计算了 gt_sorted 中所有元素的和
     intersection = gts - gt_sorted.float().cumsum(0)
     union = gts + (1 - gt_sorted).float().cumsum(0)
-    jaccard = 1 - intersection / union
+    jaccard = 1 - intersection / union #计算了Jaccard距离（Jaccard distance），它是一个用于衡量两个集合相似度的度量
     if p > 1:  # cover 1-pixel case
         jaccard[1:p] = jaccard[1:p] - jaccard[0:-1]
     return jaccard
