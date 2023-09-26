@@ -1,5 +1,5 @@
-accelerator: "gpu"
-devices: 1
-refine: True
-patch_size: 10000
-num_classes:  15
+accelerator: "gpu"    #加速设备
+devices: 1           #1号设备
+refine: True         #是否精细化
+patch_size: 10000    #块大小
+num_classes:  15     #类别
