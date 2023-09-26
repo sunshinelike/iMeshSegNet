@@ -2,20 +2,20 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-
+#衡量DSC指标 dice similarity cofficient
 def weighting_DSC(y_pred, y_true, class_weights, smooth=1.0):
     """
     inputs:
-        y_pred [n_classes, x, y, z] probability
-        y_true [n_classes, x, y, z] one-hot code
-        class_weights
-        smooth = 1.0
+        y_pred [n_classes, x, y, z] probability 
+        y_true [n_classes, x, y, z] one-hot code 
+        class_weights #类权重
+        smooth = 1.0 
     """
     smooth = 1.0
     mdsc = 0.0
     n_classes = y_pred.shape[-1]
 
-    # convert probability to one-hot code
+    # convert probability to one-hot code 将概率转为独热编码
     max_idx = torch.argmax(y_pred, dim=-1, keepdim=True)
     one_hot = torch.zeros_like(y_pred)
     one_hot.scatter_(-1, max_idx, 1)
@@ -31,7 +31,7 @@ def weighting_DSC(y_pred, y_true, class_weights, smooth=1.0):
 
     return mdsc
 
-
+# sensitivity
 def weighting_SEN(y_pred, y_true, class_weights, smooth=1.0):
     """
     inputs:
@@ -58,7 +58,7 @@ def weighting_SEN(y_pred, y_true, class_weights, smooth=1.0):
 
     return msen
 
-
+# positive predictive value
 def weighting_PPV(y_pred, y_true, class_weights, smooth=1.0):
     """
     inputs:
@@ -85,7 +85,7 @@ def weighting_PPV(y_pred, y_true, class_weights, smooth=1.0):
 
     return mppv
 
-
+#dice loss
 def _Generalized_Dice_Loss(y_pred, y_true, class_weights, smooth=1.0):
     """
     inputs:
@@ -115,7 +115,7 @@ def _Generalized_Dice_Loss(y_pred, y_true, class_weights, smooth=1.0):
 
     return loss
 
-
+#basic DSC
 def DSC(y_pred, y_true, ignore_background=True, smooth=1.0):
     """
     inputs:
