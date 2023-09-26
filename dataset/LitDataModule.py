@@ -10,23 +10,23 @@ from utils import GetVTKTransformationMatrix
 
 from .imeshdataset import iMeshDataset
 
-
+#数据增强
 def augment(mesh: vedo.Mesh):
     vtk_matrix = GetVTKTransformationMatrix(
-        rotate_X=[-180, 180],
-        rotate_Y=[-180, 180],
+        rotate_X=[-180, 180], #旋转
+        rotate_Y=[-180, 180], 
         rotate_Z=[-180, 180],
-        translate_X=[-10, 10],
+        translate_X=[-10, 10], #翻转
         translate_Y=[-10, 10],
         translate_Z=[-10, 10],
-        scale_X=[0.8, 1.2],
+        scale_X=[0.8, 1.2],  #缩放因子
         scale_Y=[0.8, 1.2],
         scale_Z=[0.8, 1.2],
     )
     mesh.apply_transform(vtk_matrix)
     return mesh
 
-
+#轻量数据模块
 class LitDataModule(pl.LightningDataModule):
     def __init__(
         self,
